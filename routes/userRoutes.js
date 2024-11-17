@@ -1,5 +1,5 @@
 import express from 'express';
-import userController from '../controllers/userController.js';
+import { register, login } from '../controllers/userController.js';  // Named imports
 
 const router = express.Router();
 
@@ -10,8 +10,7 @@ const router = express.Router();
  */
 router.post('/register', async (req, res) => {
     try {
-        const result = await userController.register(req.body);
-        res.status(201).json({ message: 'User registered successfully', data: result });
+        await register(req, res);
     } catch (error) {
         console.error('Registration error:', error);
         res.status(500).json({ message: 'Internal server error', error: error.message });
@@ -25,8 +24,7 @@ router.post('/register', async (req, res) => {
  */
 router.post('/login', async (req, res) => {
     try {
-        const result = await userController.login(req.body);
-        res.status(200).json({ message: 'User logged in successfully', data: result });
+        await login(req, res);
     } catch (error) {
         console.error('Login error:', error);
         res.status(401).json({ message: 'Unauthorized', error: error.message });
