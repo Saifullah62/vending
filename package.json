@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A virtual vending machine app for MyCardShares",
   "main": "server.js",
-  "type": "module",  // Add this line to enable ESM support
+  "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
