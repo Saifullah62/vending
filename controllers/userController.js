@@ -51,7 +51,7 @@ const createUser = async (userData) => {
  * @param {Object} res - The response object.
  * @returns {Promise<void>} - Sends a response to the client.
  */
-exports.register = async (req, res) => {
+const register = async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
@@ -75,7 +75,7 @@ exports.register = async (req, res) => {
  * @param {Object} res - The response object.
  * @returns {Promise<void>} - Sends a response to the client.
  */
-exports.login = async (req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -89,4 +89,10 @@ exports.login = async (req, res) => {
         console.error(error);
         res.status(500).json({ error: error.message || 'Error logging in.' });
     }
+};
+
+// Exporting the functions for use in userRoutes.js
+module.exports = {
+    register,
+    login
 };
