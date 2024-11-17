@@ -3,16 +3,20 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js'; // Note: Add .js for ESM
 import config from '../config/config.js'; // Note: Add .js for ESM
 
+import bcrypt from 'bcryptjs';
+
 /**
- * Hashes a password using bcrypt.
+ * Hashes a password using bcryptjs.
  * @param {string} password - The password to hash.
  * @returns {Promise<string>} - The hashed password.
  * @throws {Error} - Throws an error if hashing fails.
  */
 const hashPassword = async (password) => {
     try {
-        return await bcrypt.hash(password, 10);
+        console.log('Attempting to hash the password...');
+        return await bcrypt.hash(password, 10); // Use bcryptjs here
     } catch (error) {
+        console.error('Error during password hashing:', error); // Provide more information
         throw new Error('Error hashing password');
     }
 };
