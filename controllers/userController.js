@@ -5,9 +5,6 @@ const config = require('../config/config');
 
 /**
  * Hashes a password using bcrypt.
- * @param {string} password - The password to hash.
- * @returns {Promise<string>} - The hashed password.
- * @throws {Error} - Throws an error if hashing fails.
  */
 const hashPassword = async (password) => {
     try {
@@ -19,9 +16,6 @@ const hashPassword = async (password) => {
 
 /**
  * Finds a user by their email address.
- * @param {string} email - The email of the user to find.
- * @returns {Promise<User|null>} - The user object if found, otherwise null.
- * @throws {Error} - Throws an error if the search fails.
  */
 const findUserByEmail = async (email) => {
     try {
@@ -33,9 +27,6 @@ const findUserByEmail = async (email) => {
 
 /**
  * Creates a new user in the database.
- * @param {Object} userData - The data of the user to create.
- * @returns {Promise<User>} - The created user object.
- * @throws {Error} - Throws an error if user creation fails.
  */
 const createUser = async (userData) => {
     try {
@@ -47,9 +38,6 @@ const createUser = async (userData) => {
 
 /**
  * Registers a new user.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Promise<void>} - Sends a response to the client.
  */
 const register = async (req, res) => {
     const { username, email, password } = req.body;
@@ -71,9 +59,6 @@ const register = async (req, res) => {
 
 /**
  * Logs in a user.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Promise<void>} - Sends a response to the client.
  */
 const login = async (req, res) => {
     const { email, password } = req.body;
@@ -91,8 +76,14 @@ const login = async (req, res) => {
     }
 };
 
-// Exporting the functions for use in userRoutes.js
+// Named exports for each function
 module.exports = {
+    register,
+    login
+};
+
+// Default export as an object containing all functions
+export default {
     register,
     login
 };
