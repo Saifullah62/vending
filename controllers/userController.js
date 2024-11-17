@@ -1,10 +1,13 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const config = require('../config/config');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js'; // Note: Add .js for ESM
+import config from '../config/config.js'; // Note: Add .js for ESM
 
 /**
  * Hashes a password using bcrypt.
+ * @param {string} password - The password to hash.
+ * @returns {Promise<string>} - The hashed password.
+ * @throws {Error} - Throws an error if hashing fails.
  */
 const hashPassword = async (password) => {
     try {
@@ -16,6 +19,9 @@ const hashPassword = async (password) => {
 
 /**
  * Finds a user by their email address.
+ * @param {string} email - The email of the user to find.
+ * @returns {Promise<User|null>} - The user object if found, otherwise null.
+ * @throws {Error} - Throws an error if the search fails.
  */
 const findUserByEmail = async (email) => {
     try {
@@ -27,6 +33,9 @@ const findUserByEmail = async (email) => {
 
 /**
  * Creates a new user in the database.
+ * @param {Object} userData - The data of the user to create.
+ * @returns {Promise<User>} - The created user object.
+ * @throws {Error} - Throws an error if user creation fails.
  */
 const createUser = async (userData) => {
     try {
@@ -38,8 +47,11 @@ const createUser = async (userData) => {
 
 /**
  * Registers a new user.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - Sends a response to the client.
  */
-const register = async (req, res) => {
+export const register = async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
@@ -59,8 +71,11 @@ const register = async (req, res) => {
 
 /**
  * Logs in a user.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - Sends a response to the client.
  */
-const login = async (req, res) => {
+export const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -74,16 +89,4 @@ const login = async (req, res) => {
         console.error(error);
         res.status(500).json({ error: error.message || 'Error logging in.' });
     }
-};
-
-// Named exports for each function
-module.exports = {
-    register,
-    login
-};
-
-// Default export as an object containing all functions
-export default {
-    register,
-    login
 };
