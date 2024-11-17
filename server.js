@@ -1,9 +1,11 @@
-const express = require('express');
-const connectDB = require('./config/config');
-require('dotenv').config();https://github.com/Saifullah62/vending/tree/main
-const cors = require('cors');
+import express from 'express';
+import connectDB from './config/config.js';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import userRoutes from './routes/userRoutes.js';
 
-const userRoutes = require('./routes/userRoutes');
+// Load environment variables from .env file
+dotenv.config();
 
 // Initialize express app
 const app = express();
@@ -14,8 +16,11 @@ app.use(express.json());
 // Use CORS middleware for cross-origin requests
 app.use(cors());
 
-// Connect to MongoDB
-connectDB();
+// Connect to MongoDB with error handling
+connectDB().catch(err => {
+    console.error('Failed to connect to MongoDB:', err);
+    process.exit(1);
+});
 
 // Define API routes
 app.use('/api', userRoutes);
@@ -28,7 +33,7 @@ app.get('/health', (req, res) => {
 // Custom Error Handling Middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).json({ error: 'Something went wrong!' });
+    res.status(err.status || 500).json({ error: err.message || 'Something went wrong!' });
 });
 
 // Start the server
